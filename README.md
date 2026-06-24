@@ -1,4 +1,6 @@
 # team10
 
-濵口亮
+sato kota
+ryo hamaguchi
+
 
