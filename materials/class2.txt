@@ -1,0 +1,34 @@
+クラス			
+Bomb			
+属性（変数）			                メモ
+属性	    型	    内容	        	プレイヤーが置いた位置を保持する
+x	        int	    爆弾のｘ座標		タイマーが０になると爆発
+y	        int	    爆弾のｙ座標		爆発するとExprosionクラスを生成
+timer	    int	    爆発までの残り時間	爆発後は削除対象になる
+power	    int	    爆風の長さ	
+exploded	boolean	爆発済みかどうか	
+owner	    player	設置したプレーヤー	
+メソッド			
+メソッド		内容	
+bomb()		    爆弾を生成する	
+update()	    タイマーを減らす	
+draw()		    爆弾を描画する	
+explode()	    爆風を発生させる	
+isExploded()	爆発済みか返す	
+クラス			
+Explosion			
+属性						    メモ
+属性		型	    内容			爆発した瞬間に生成
+x		    int	    爆風の中心x		上下左右に広がる
+y		    int	    爆風の中心y		壁で止まる
+direction	int	    爆風の方向		壊せるブロックを破壊する
+length		int	    爆風の長さ		プレイヤーに当たるとゲームオーバー
+duration	int	    爆風の表示時間	
+メソッド			
+メソッド			内容	
+explosion()		爆風生成	
+update()		表示時間を減らす	
+draw()			爆風を描画	
+hitPlayer()		プレイヤーと当たり判定	
+hitBlock()		ブロックとの当たり判定	
+disappear()		爆風を消す	
