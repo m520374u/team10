@@ -1,0 +1,36 @@
+クラス名:Map
+
+主担当者名:濵邉圭太
+
+属性（変数）
+int[][] map：マップデータを保持する2次元配列
+int tileSize：1マスの大きさ
+int rows：マップの行数
+int cols：マップの列数
+
+メソッド
+display()：マップ全体を描画する
+isWall(int x, int y)：指定した位置が壁かどうか判定する
+isBlock(int x, int y)：指定した位置が壊せるブロックかどうか判定する
+removeBlock(int x, int y)：壊れたブロックを床に変更する
+
+メモ
+ゲーム上のマップを管理するクラスであり、壁やブロック、床かどうかを判定する。
+
+クラス名:Block
+
+主担当者名:濵邉圭太
+
+属性（変数）
+int x：X座標
+int y：Y座標
+boolean breakable：破壊可能かどうか
+boolean destroyed：破壊済みかどうか
+
+メソッド
+display()：ブロックを描画する
+breakBlock()：ブロックを破壊する
+isDestroyed()：ブロックが破壊されたかどうか返す
+
+メモ
+マップ上のブロックの表示を管理するクラスであり、ブロックの破壊の有無を示す。
