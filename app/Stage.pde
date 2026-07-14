@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 class Stage {
 
-  int[][] map;
+  int[][] stage;
   int tileSize;
 
   ArrayList<Block> blocks;
@@ -31,8 +31,8 @@ class Stage {
   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 };
 
-    for (int y = 0; y < map.length; y++) {
-      for (int x = 0; x < map[y].length; x++) {
+    for (int y = 0; y < stage.length; y++) {
+      for (int x = 0; x < stage[y].length; x++) {
 
         if (map[y][x] == 2) {
           blocks.add(new Block(x * tileSize, y * tileSize));
@@ -45,10 +45,10 @@ class Stage {
 
   void display() {
 
-    for (int y = 0; y < map.length; y++) {
-      for (int x = 0; x < map[y].length; x++) {
+    for (int y = 0; y < stage.length; y++) {
+      for (int x = 0; x < stage[y].length; x++) {
 
-        if (map[y][x] == 1) {
+        if (stage[y][x] == 1) {
           fill(100);
         } else {
           fill(230);
@@ -67,11 +67,11 @@ class Stage {
 
   boolean isWall(int x, int y) {
 
-    if (x < 0 || y < 0 || x >= map[0].length || y >= map.length) {
+    if (x < 0 || y < 0 || x >= stage[0].length || y >= stage.length) {
       return true;
     }
 
-    return map[y][x] == 1;
+    return stage[y][x] == 1;
   }
 
   void breakBlock(int x, int y) {
