@@ -13,7 +13,6 @@ class Stage {
 
     blocks = new ArrayList<Block>();
 
-    // 0:床 1:壁 2:壊せるブロック
    map = new int[][]{
   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
   {1,0,0,2,2,2,2,2,2,2,2,2,0,0,1},
@@ -32,7 +31,6 @@ class Stage {
   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 };
 
-    // 壊せるブロックを作成
     for (int y = 0; y < map.length; y++) {
       for (int x = 0; x < map[y].length; x++) {
 
@@ -45,10 +43,8 @@ class Stage {
 
   }
 
-  // マップを描画
   void display() {
 
-    // 壁と床
     for (int y = 0; y < map.length; y++) {
       for (int x = 0; x < map[y].length; x++) {
 
@@ -63,14 +59,12 @@ class Stage {
       }
     }
 
-    // ブロック
     for (Block b : blocks) {
       b.display();
     }
 
   }
 
-  // 壁か判定
   boolean isWall(int x, int y) {
 
     if (x < 0 || y < 0 || x >= map[0].length || y >= map.length) {
@@ -80,7 +74,6 @@ class Stage {
     return map[y][x] == 1;
   }
 
-  // ブロックを壊す
   void breakBlock(int x, int y) {
 
     for (Block b : blocks) {
@@ -95,7 +88,6 @@ class Stage {
 
   }
 
-  // ブロックがあるか
   boolean hasBlock(int x, int y) {
 
     for (Block b : blocks) {
