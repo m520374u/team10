@@ -13,7 +13,7 @@ class Stage {
 
     blocks = new ArrayList<Block>();
 
-   map = new int[][]{
+   stage = new int[][]{
   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
   {1,0,0,2,2,2,2,2,2,2,2,2,0,0,1},
   {1,0,1,2,1,2,1,2,1,2,1,2,1,0,1},
@@ -34,7 +34,7 @@ class Stage {
     for (int y = 0; y < stage.length; y++) {
       for (int x = 0; x < stage[y].length; x++) {
 
-        if (map[y][x] == 2) {
+        if (stage[y][x] == 2) {
           blocks.add(new Block(x * tileSize, y * tileSize));
         }
 
@@ -105,5 +105,11 @@ class Stage {
     return false;
 
   }
+
+  boolean isWalkable(int gx, int gy) {
+
+  return !isWall(gx, gy) && !hasBlock(gx, gy);
+
+}
 
 }
