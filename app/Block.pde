@@ -15,7 +15,6 @@ class Block {
     destroyed = false;
   }
 
-  // 描画
   void display() {
 
     if (!destroyed) {
@@ -26,7 +25,6 @@ class Block {
     }
   }
 
-  // ブロックを壊す
   void breakBlock() {
 
     if (breakable) {
@@ -35,7 +33,6 @@ class Block {
 
   }
 
-  // 壊れたか判定
   boolean isDestroyed() {
     return destroyed;
   }
