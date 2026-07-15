@@ -1,4 +1,5 @@
 class Explosion {
+    PImage img;
     
     int x;
     int y;
@@ -12,6 +13,10 @@ class Explosion {
         
         // 約0.5秒間表示
         duration = 30;
+        img = loadImage("explosion.png");
+        if (img != null) {
+            img.resize(60, 60);
+        }
         
     }
         
@@ -28,27 +33,8 @@ class Explosion {
                 }
                 
                 pushStyle();
-                
-                noStroke();
-                
-                // 外側の爆風
-                fill(255, 100, 0);
-                rect(
-                    x * 40,
-                    y * 40,
-                    40,
-                    40
-                   );
-                
-                // 中央の明るい部分
-                fill(255, 230, 0);
-                rect(
-                    x * 40 + 8,
-                    y * 40 + 8,
-                    24,
-                    24
-                   );
-                
+                imageMode(CENTER);
+                image(img, x * 40 + 20, y * 40 + 20);
                 popStyle();
                 
             }
