@@ -13,13 +13,11 @@ Player player;
 ArrayList<Bomb> bombs;
 ArrayList<Explosion> explosions;
 ArrayList<Enemy> enemies;
-ArrayList<Item> items;
 
 boolean up;
 boolean down;
 boolean left;
 boolean right;
-
 boolean stageClear;
 
 void setup() {
@@ -61,7 +59,6 @@ void initializeGame() {
     bombs = new ArrayList<Bomb>();
     explosions = new ArrayList<Explosion>();
     enemies = new ArrayList<Enemy>();
-    items = new ArrayList<Item>();
     
     //敵を右下付近に配置
     enemies.add(new Enemy(520, 520));
@@ -80,8 +77,6 @@ void updateGame() {
     background(255);
     
     stage.display();
-    
-    updateItems();  
     
     movePlayer();
     
@@ -168,27 +163,6 @@ void checkGameResult() {
     
 }
 
-void updateItems() {
-    
-    for (int i = items.size() - 1; i >= 0; i--) {
-        
-        Item item = items.get(i);
-        
-        item.update();
-        item.display();
-        
-        if (!item.collected && item.isPlayerTouching(player)) {
-            
-            item.applyEffect(player);
-            
-            items.remove(i);
-            
-        }
-        
-    }
-    
-}
-
 void updateBombs() {
     
     for (int i = bombs.size() - 1; i >= 0; i--) {
@@ -202,11 +176,11 @@ void updateBombs() {
             
             bombs.remove(i);
             
-            }
-        
         }
-    
+        
     }
+    
+}
 
 void updateExplosions() {
     
@@ -221,7 +195,7 @@ void updateExplosions() {
             
             player.takeDamage(1);
             
-            }
+        }
         
         for (Enemy enemy : enemies) {
             
@@ -229,19 +203,19 @@ void updateExplosions() {
                 
                 enemy.takeDamage(1);
                 
-                }
-            
             }
+            
+        }
         
         if (explosion.isFinished()) {
             
             explosions.remove(i);
             
-            }
-        
         }
-    
+        
     }
+    
+}
 
 void updateEnemies() {
     
@@ -250,33 +224,33 @@ void updateEnemies() {
         enemy.updateAI(stage, player);
         enemy.display();
         
-        }
-    
     }
+    
+}
 
 void movePlayer() {
     
     if (!player.alive) {
         return;
-        }
+    }
     
     if (left) {
         player.move( -1, 0, stage);
-        }
+    }
     
     if (right) {
         player.move(1, 0, stage);
-        }
+    }
     
     if (up) {
         player.move(0, -1, stage);
-        }
+    }
     
     if (down) {
         player.move(0, 1, stage);
-        }
-    
     }
+    
+}
 
 boolean allEnemiesDefeated() {
     
@@ -284,13 +258,13 @@ boolean allEnemiesDefeated() {
         
         if (enemy.alive) {
             return false;
-            }
-        
         }
+        
+    }
     
     return true;
     
-    }
+}
 
 void keyPressed() {
     
@@ -302,40 +276,40 @@ void keyPressed() {
             initializeGame();
             gameState = PLAYING;
             
-            }
+        }
         
         return;
         
-        }
+    }
     
     //プレイ中
     if (gameState == PLAYING) {
         
         if (keyCode == LEFT) {
             left = true;
-            }
+        }
         
         if (keyCode == RIGHT) {
             right = true;
-            }
+        }
         
         if (keyCode == UP) {
             up = true;
-            }
+        }
         
         if (keyCode == DOWN) {
             down = true;
-            }
+        }
         
         if (key == ' ') {
             
             player.placeBomb();
             
-            }
+        }
         
         return;
         
-        }
+    }
     
     //リザルト画面
     if (gameState == RESULT) {
@@ -345,34 +319,34 @@ void keyPressed() {
             initializeGame();
             gameState = PLAYING;
             
-            }
+        }
         
         if (key == 't' || key == 'T') {
             
             gameState = TITLE;
             
-            }
-        
         }
-    
+        
     }
+    
+}
 
 void keyReleased() {
     
     if (keyCode == LEFT) {
         left = false;
-        }
+    }
     
     if (keyCode == RIGHT) {
         right = false;
-        }
+    }
     
     if (keyCode == UP) {
         up = false;
-        }
+    }
     
     if (keyCode == DOWN) {
         down = false;
-        }
-    
     }
+    
+}

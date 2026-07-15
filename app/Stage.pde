@@ -82,6 +82,13 @@ class Stage {
                 
                 b.breakBlock();
                 
+                if (random(1) < 0.3) {
+                    
+                    items.add(new Item(x, y));
+                    
+                }
+                break;
+                
             }
             
         }
