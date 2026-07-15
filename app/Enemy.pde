@@ -3,7 +3,6 @@ class Enemy extends Character {
     PImage img;
     
     int direction;
-    
     int thinkTimer;
     
     Enemy(float x, float y) {
@@ -62,18 +61,11 @@ class Enemy extends Character {
             
         }
         
-        /*
-        * 壁やブロックで動けなかった場合は、
-        * 別の方向へ変更する。
-        */
+        
         if (x == oldX && y == oldY) {
-            
             direction = int(random(4));
             thinkTimer = 10;
-            
         }
-        
-        checkPlayerCollision(player);
         
     }
     
@@ -81,7 +73,7 @@ class Enemy extends Character {
         
         if (!alive || !player.alive) {
             return;
-            }
+        }
         
         boolean hit =
         x < player.x + 34 && 
@@ -93,27 +85,27 @@ class Enemy extends Character {
             
             player.takeDamage(1);
             
-            }
-        
         }
+        
+    }
     
     void display() {
         
         if (!alive) {
             return;
-            }
+        }
         
         if (img != null) {
             
             image(img, x, y);
             
-            } else {
+        } else {
             
             fill(255, 0,0);
             rect(x, y, 40, 40);
             
-            }
-        
         }
-    
+        
     }
+    
+}

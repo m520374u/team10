@@ -80,95 +80,95 @@ class Bomb {
         }
         
     }
+    
+    void explode() {
         
-        void explode() {
+        exploded = true;
+        
+        explosions.add(new Explosion(x, y));
+        
+        // 右
+        for (int i = 1; i <= power; i++) {
             
-            exploded = true;
+            if (stage.isWall(x + i, y))
+                break;
             
-            explosions.add(new Explosion(x, y));
+            explosions.add(new Explosion(x + i, y));
             
-            // 右
-            for (int i = 1; i <= power; i++) {
+            if (stage.hasBlock(x + i, y)) {
                 
-                if (stage.isWall(x + i, y))
-                    break;
-                
-                explosions.add(new Explosion(x + i, y));
-                
-                if (stage.hasBlock(x + i, y)) {
-                    
-                    stage.breakBlock(x + i, y);
-                    break;
-                    
-                }
+                stage.breakBlock(x + i, y);
+                break;
                 
             }
-            
-            // 左
-            for (int i = 1; i <= power; i++) {
-                
-                if (stage.isWall(x - i, y))
-                    break;
-                
-                explosions.add(new Explosion(x - i, y));
-                
-                if (stage.hasBlock(x - i, y)) {
-                    
-                    stage.breakBlock(x - i, y);
-                    break;
-                    
-                }
-                
-            }
-            
-            // 下
-            for (int i = 1; i <= power; i++) {
-                
-                if (stage.isWall(x, y + i))
-                    break;
-                
-                explosions.add(new Explosion(x, y + i));
-                
-                if (stage.hasBlock(x, y + i)) {
-                    
-                    stage.breakBlock(x, y + i);
-                    break;
-                    
-                }
-                
-            }
-            
-            // 上
-            for (int i = 1; i <= power; i++) {
-                
-                if (stage.isWall(x, y - i))
-                    break;
-                
-                explosions.add(new Explosion(x, y - i));
-                
-                if (stage.hasBlock(x, y - i)) {
-                    
-                    stage.breakBlock(x, y - i);
-                    break;
-                    
-                }
-                
-            }
-            
-            owner.currentBombs--;
             
         }
         
-        boolean isOwnerOverlapping() {
+        // 左
+        for (int i = 1; i <= power; i++) {
             
-            float bombX = x * 40;
-            float bombY = y * 40;
+            if (stage.isWall(x - i, y))
+                break;
             
-            return owner.x < bombX + 40
-            && owner.x + 40 > bombX
-            && owner.y < bombY + 40
-            && owner.y + 40 > bombY;
+            explosions.add(new Explosion(x - i, y));
+            
+            if (stage.hasBlock(x - i, y)) {
+                
+                stage.breakBlock(x - i, y);
+                break;
+                
+            }
             
         }
+        
+        // 下
+        for (int i = 1; i <= power; i++) {
+            
+            if (stage.isWall(x, y + i))
+                break;
+            
+            explosions.add(new Explosion(x, y + i));
+            
+            if (stage.hasBlock(x, y + i)) {
+                
+                stage.breakBlock(x, y + i);
+                break;
+                
+            }
+            
+        }
+        
+        // 上
+        for (int i = 1; i <= power; i++) {
+            
+            if (stage.isWall(x, y - i))
+                break;
+            
+            explosions.add(new Explosion(x, y - i));
+            
+            if (stage.hasBlock(x, y - i)) {
+                
+                stage.breakBlock(x, y - i);
+                break;
+                
+            }
+            
+        }
+        
+        owner.currentBombs--;
         
     }
+    
+    boolean isOwnerOverlapping() {
+        
+        float bombX = x * 40;
+        float bombY = y * 40;
+        
+        return owner.x < bombX + 40
+        && owner.x + 40 > bombX
+        && owner.y < bombY + 40
+        && owner.y + 40 > bombY;
+        
+    }
+    
+}
