@@ -5,12 +5,15 @@ final int TITLE = 0;
 final int PLAYING = 1;
 final int RESULT = 2;
 
+<<<<<<< HEAD
 // アイテムの種類
 final int FIRE_ITEM = 0;
 final int BOMB_ITEM = 1;
 
 PImage explosionImage;
 
+=======
+>>>>>>> 2252c7f8f9bba02335ae7daf8daa6ce0586792f6
 int gameState;
 
 Stage stage;
@@ -19,7 +22,6 @@ Player player;
 ArrayList<Bomb> bombs;
 ArrayList<Explosion> explosions;
 ArrayList<Enemy> enemies;
-ArrayList<Item> items;
 
 boolean up;
 boolean down;
@@ -32,6 +34,7 @@ void setup() {
     size(600, 600);
     pixelDensity(1);
     frameRate(60);
+<<<<<<< HEAD
     
     explosionImage = loadImage("explosion.png");
     
@@ -39,18 +42,17 @@ void setup() {
         explosionImage.resize(40, 40);
     }
     
+=======
+>>>>>>> 2252c7f8f9bba02335ae7daf8daa6ce0586792f6
     gameState = TITLE;
 }
 
 void draw() {
     background(255);
-    
     if (gameState == TITLE) {
         displayTitleScreen();
-        
     } else if (gameState == PLAYING) {
         updateGame();
-        
     } else if (gameState == RESULT) {
         displayResultScreen();
     }
@@ -63,34 +65,29 @@ void initializeGame() {
     bombs = new ArrayList<Bomb>();
     explosions = new ArrayList<Explosion>();
     enemies = new ArrayList<Enemy>();
-    items = new ArrayList<Item>();
     
+    // 敵を右下付近に配置
     enemies.add(new Enemy(520, 40, "bomberkun2.png"));
-    enemies.add(new Enemy(40, 520, "bomberkun3.png"));
-    enemies.add(new Enemy(520, 520, "bomberkun4.png"));
+enemies.add(new Enemy(40, 520, "bomberkun3.png"));
+enemies.add(new Enemy(520, 520, "bomberkun4.png"));
     
     up = false;
     down = false;
     left = false;
     right = false;
-    
     stageClear = false;
 }
 
 void updateGame() {
     background(255);
-    
     stage.display();
     
     movePlayer();
     updateBombs();
     updateExplosions();
-    updateItems();
     updateEnemies();
     
     player.display();
-    
-    displayPlayerStatus();
     checkGameResult();
 }
 
@@ -104,13 +101,13 @@ void displayTitleScreen() {
     
     fill(255);
     textSize(24);
-    text("Arrow Keys : Move", width / 2, 300);
-    text("Space : Place Bomb", width / 2, 340);
+    text("矢印キー：移動", width / 2, 300);
+    text("スペースキー：爆弾を設置", width / 2, 340);
     
     if (frameCount % 60 < 40) {
         fill(255);
         textSize(26);
-        text("PRESS SPACE TO START", width / 2, 440);
+        text("SPACEキーでスタート", width / 2, 440);
     }
 }
 
@@ -122,7 +119,6 @@ void displayResultScreen() {
         fill(255, 230, 0);
         textSize(55);
         text("STAGE CLEAR!", width / 2, 220);
-        
     } else {
         fill(255, 70, 70);
         textSize(55);
@@ -131,34 +127,8 @@ void displayResultScreen() {
     
     fill(255);
     textSize(24);
-    text("Press R : Restart", width / 2, 340);
-    text("Press T : Title", width / 2, 390);
-}
-
-void displayPlayerStatus() {
-    pushStyle();
-    
-    fill(0, 170);
-    noStroke();
-    rect(5, 5, 185, 55);
-    
-    fill(255);
-    textAlign(LEFT, TOP);
-    textSize(16);
-    
-    text(
-        "Fire Power：" + player.bombPower,
-        12,
-        10
-       );
-    
-    text(
-        "Max Bombs：" + player.maxBombs,
-        12,
-        34
-       );
-    
-    popStyle();
+    text("Rキーでリスタート", width / 2, 340);
+    text("Tキーでタイトルへ戻る", width / 2, 390);
 }
 
 void checkGameResult() {
@@ -167,7 +137,6 @@ void checkGameResult() {
         gameState = RESULT;
         return;
     }
-    
     if (allEnemiesDefeated()) {
         stageClear = true;
         gameState = RESULT;
@@ -177,10 +146,8 @@ void checkGameResult() {
 void updateBombs() {
     for (int i = bombs.size() - 1; i >= 0; i--) {
         Bomb bomb = bombs.get(i);
-        
         bomb.update();
         bomb.display();
-        
         if (bomb.exploded) {
             bombs.remove(i);
         }
@@ -190,7 +157,6 @@ void updateBombs() {
 void updateExplosions() {
     for (int i = explosions.size() - 1; i >= 0; i--) {
         Explosion explosion = explosions.get(i);
-        
         explosion.update();
         explosion.display();
         
@@ -210,29 +176,10 @@ void updateExplosions() {
     }
 }
 
-void updateItems() {
-    for (int i = items.size() - 1; i >= 0; i--) {
-        Item item = items.get(i);
-        
-        item.update();
-        item.display();
-        
-        if (item.isPlayerTouching(player)) {
-            item.applyEffect(player);
-        }
-        
-        if (item.collected) {
-            items.remove(i);
-        }
-    }
-}
-
 void updateEnemies() {
     for (Enemy enemy : enemies) {
-        if (enemy.alive) {
-            enemy.updateAI(stage, player);
-            enemy.display();
-        }
+        enemy.updateAI(stage, player);
+        enemy.display();
     }
 }
 
@@ -240,19 +187,10 @@ void movePlayer() {
     if (!player.alive) {
         return;
     }
-    
-    if (left) {
-        player.move( -1, 0, stage);
-        
-    } else if (right) {
-        player.move(1, 0, stage);
-        
-    } else if (up) {
-        player.move(0, -1, stage);
-        
-    } else if (down) {
-        player.move(0, 1, stage);
-    }
+    if (left)  player.move(-1, 0, stage);
+    if (right) player.move(1, 0, stage);
+    if (up)    player.move(0, -1, stage);
+    if (down)  player.move(0, 1, stage);
 }
 
 boolean allEnemiesDefeated() {
@@ -261,7 +199,6 @@ boolean allEnemiesDefeated() {
             return false;
         }
     }
-    
     return true;
 }
 
@@ -271,31 +208,17 @@ void keyPressed() {
             initializeGame();
             gameState = PLAYING;
         }
-        
         return;
     }
     
     if (gameState == PLAYING) {
-        if (keyCode == LEFT) {
-            left = true;
-        }
-        
-        if (keyCode == RIGHT) {
-            right = true;
-        }
-        
-        if (keyCode == UP) {
-            up = true;
-        }
-        
-        if (keyCode == DOWN) {
-            down = true;
-        }
-        
+        if (keyCode == LEFT)  left = true;
+        if (keyCode == RIGHT) right = true;
+        if (keyCode == UP)    up = true;
+        if (keyCode == DOWN)  down = true;
         if (key == ' ') {
             player.placeBomb();
         }
-        
         return;
     }
     
@@ -304,7 +227,6 @@ void keyPressed() {
             initializeGame();
             gameState = PLAYING;
         }
-        
         if (key == 't' || key == 'T') {
             gameState = TITLE;
         }
@@ -312,19 +234,8 @@ void keyPressed() {
 }
 
 void keyReleased() {
-    if (keyCode == LEFT) {
-        left = false;
-    }
-    
-    if (keyCode == RIGHT) {
-        right = false;
-    }
-    
-    if (keyCode == UP) {
-        up = false;
-    }
-    
-    if (keyCode == DOWN) {
-        down = false;
-    }
+    if (keyCode == LEFT)  left = false;
+    if (keyCode == RIGHT) right = false;
+    if (keyCode == UP)    up = false;
+    if (keyCode == DOWN)  down = false;
 }
