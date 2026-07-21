@@ -9,6 +9,8 @@ final int RESULT = 2;
 final int FIRE_ITEM = 0;
 final int BOMB_ITEM = 1;
 
+PImage explosionImage;
+
 int gameState;
 
 Stage stage;
@@ -30,6 +32,12 @@ void setup() {
     size(600, 600);
     pixelDensity(1);
     frameRate(60);
+    
+    explosionImage = loadImage("explosion.png");
+    
+    if (explosionImage != null) {
+        explosionImage.resize(40, 40);
+    }
     
     gameState = TITLE;
 }
