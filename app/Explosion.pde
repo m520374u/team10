@@ -1,70 +1,64 @@
 class Explosion {
-    PImage img;
-    
-    int x;
-    int y;
-    
+    int x, y;
     int duration;
     
     Explosion(int x, int y) {
-        
         this.x = x;
         this.y = y;
-        
-        // 約0.5秒間表示
         duration = 30;
-        img = loadImage("explosion.png");
-        if (img != null) {
-            img.resize(60, 60);
-        }
-        
     }
-        
+    
     void update() {
-            
-            duration--;
-            
-        }
-            
-           void display() {
-                
-                if (isFinished()) {
-                    return;
-                }
-                
-                pushStyle();
-                imageMode(CENTER);
-                image(img, x * 40 + 20, y * 40 + 20);
-                popStyle();
-                
-            }
-                
-                boolean isFinished() {
-                    
-                    return duration <= 0;
-                    
-                }
-                    
-                    boolean hitPlayer(Player player) {
-                        
-                        int playerGridX = int((player.x + 20) / 40);
-                        int playerGridY = int((player.y + 20) / 40);
-                        
-                        return playerGridX == x && playerGridY == y;
-                        
-                    }
-                        
-                        boolean hitEnemy(Enemy enemy) {
-                            
-                        if (!enemy.alive){
-                                return false;
-                            }
-                            
-                           int enemyGridX = int((enemy.x + 20) / 40);
-                           int enemyGridY = int((enemy.y + 20) / 40);
-                            
-                           return enemyGridX == x && enemyGridY == y;
-                            
-                        }
-                            
-                        }
+        duration--;
+    }
+    
+    void display() {
+        if (isFinished()) return;
+        
+        pushStyle();
+        noStroke();
+        fill(255, 100, 0);
+        rect(x * 40, y * 40, 40, 40);
+        fill(255, 230, 0);
+        rect(x * 40 + 8, y * 40 + 8, 24, 24);
+        popStyle();
+    }
+    
+    boolean isFinished() {
+        return duration <= 0;
+    }
+    
+    boolean hitPlayer(Player player) {
+        if (!player.alive) return false;
+        
+        float expLeft = x * 40;
+        float expRight = expLeft + 40;
+        float expTop = y * 40;
+        float expBottom = expTop + 40;
+        
+        float playerLeft = player.x + 4;
+        float playerRight = player.x + 36;
+        float playerTop = player.y + 4;
+        float playerBottom = player.y + 36;
+        
+        return playerLeft < expRight && playerRight > expLeft &&
+               playerTop < expBottom && playerBottom > expTop;
+    }
+    
+    boolean hitEnemy(Enemy enemy) {
+        if (!enemy.alive) return false;
+        
+        float expLeft = x * 40;
+        float expRight = expLeft + 40;
+        float expTop = y * 40;
+        float expBottom = expTop + 40;
+        
+        float enemyLeft = enemy.x + 4;
+        float enemyRight = enemy.x + 36;
+        float enemyTop = enemy.y + 4;
+        float enemyBottom = enemy.y + 36;
+        
+        return enemyLeft < expRight && enemyRight > expLeft &&
+               enemyTop < expBottom && enemyBottom > expTop;
+    }
+}

@@ -1,65 +1,30 @@
 class Player extends Character {
-    
     PImage img;
     
-    int maxBombs;
-    int currentBombs;
-    int bombPower;
-    
     Player(float x, float y) {
-        
         super(x, y);
-        
-        img = loadImage("bomberkun.png");
-        img.resize(40, 40);
-        
+        try {
+            img = loadImage("bomberkun.png");
+            if (img != null) img.resize(40, 40);
+        } catch (Exception e) {
+            img = null;
+        }
         maxBombs = 1;
         currentBombs = 0;
         bombPower = 2;
-        
     }
     
     void display() {
-        
         updateCharacter();
+        if (!alive) return;
         
-        if (!alive) {
-            return;
+        if (invincible && frameCount % 10 < 5) return;
+        
+        if (img != null) {
+            image(img, x, y);
+        } else {
+            fill(0, 0, 255);
+            rect(x, y, 40, 40);
         }
-        
-        if (invincible && frameCount % 10 < 5) {
-            return;
-        }
-        
-        image(img, x, y);
-        
     }
-    
-    void placeBomb() {
-        
-        if (!alive) {
-            return;
-        }
-        
-        if (currentBombs >= maxBombs) {
-            return;
-        }
-        
-        int gx = int((x + 20) / 40);
-        int gy = int((y + 20) / 40);
-        
-        for (Bomb bomb : bombs) {
-            
-            if (bomb.x == gx && bomb.y == gy) {
-                return;
-            }
-            
-        }
-        
-        bombs.add(new Bomb(gx, gy, this));
-        
-        currentBombs++;
-        
-    }
-    
 }
