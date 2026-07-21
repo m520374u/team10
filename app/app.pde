@@ -27,51 +27,59 @@ boolean stageClear;
 int gameStartTime;
 int gameTimeLimit = 5 * 60 * 1000; // 5分
 
+PImage explosionImage;
+
 void setup() {
     size(600, 600);
     pixelDensity(1);
     frameRate(60);
     gameState = TITLE;
+    explosionImage = loadImage("explosion.png");
+    if (explosionImage != null) {
+        explosionImage.resize(40, 40);
+    }
+    
+    gameState = TITLE;
 }
 
 void draw() {
-
+    
     background(255);
-
+    
     if (gameState == TITLE) {
-
+        
         displayTitleScreen();
-
+        
     } else if (gameState == PLAYING) {
-
+        
         int remaining = gameTimeLimit - (millis() - gameStartTime);
-
+        
         if (remaining <= 0) {
             stageClear = false;
             gameState = RESULT;
             return;
         }
-
+        
         updateGame();
-
+        
         // 残り時間表示
         fill(0);
         textSize(28);
         textAlign(CENTER, CENTER);
-
+        
         int minutes = remaining / 60000;
         int seconds = (remaining / 1000) % 60;
-
+        
         text(
             "LIMIT " + minutes + ":" + nf(seconds,2),
             width / 2,
             20
-        );
-
+           );
+        
     } else if (gameState == RESULT) {
-
+        
         displayResultScreen();
-
+        
     }
 }
 void initializeGame() {
@@ -84,8 +92,8 @@ void initializeGame() {
     items = new ArrayList<Item>();
     // 敵を右下付近に配置
     enemies.add(new Enemy(520, 40, "bomberkun2.png"));
-enemies.add(new Enemy(40, 520, "bomberkun3.png"));
-enemies.add(new Enemy(520, 520, "bomberkun4.png"));
+    enemies.add(new Enemy(40, 520, "bomberkun3.png"));
+    enemies.add(new Enemy(520, 520, "bomberkun4.png"));
     
     up = false;
     down = false;
@@ -98,14 +106,14 @@ enemies.add(new Enemy(520, 520, "bomberkun4.png"));
 void updateGame() {
     background(255);
     stage.display();
-
+    
     updateItems();
-
+    
     movePlayer();
     updateBombs();
     updateExplosions();
     updateEnemies();
-
+    
     player.display();
     checkGameResult();
 }
@@ -120,13 +128,13 @@ void displayTitleScreen() {
     
     fill(255);
     textSize(24);
-    text("矢印キー：移動", width / 2, 300);
-    text("スペースキー：爆弾を設置", width / 2, 340);
+    text("Arrow Keys : Move", width / 2, 300);
+    text("Space Key : Place Bomb", width / 2, 340);
     
     if (frameCount % 60 < 40) {
         fill(255);
         textSize(26);
-        text("SPACEキーでスタート", width / 2, 440);
+        text("PRESS SPACE TO START", width / 2, 440);
     }
 }
 
@@ -146,8 +154,8 @@ void displayResultScreen() {
     
     fill(255);
     textSize(24);
-    text("Rキーでリスタート", width / 2, 340);
-    text("Tキーでタイトルへ戻る", width / 2, 390);
+    text("Press R : Restart", width / 2, 340);
+    text("Press T : Title", width / 2, 390);
 }
 
 void checkGameResult() {
@@ -206,7 +214,7 @@ void movePlayer() {
     if (!player.alive) {
         return;
     }
-    if (left)  player.move(-1, 0, stage);
+    if (left)  player.move( -1, 0, stage);
     if (right) player.move(1, 0, stage);
     if (up)    player.move(0, -1, stage);
     if (down)  player.move(0, 1, stage);
@@ -259,12 +267,12 @@ void keyReleased() {
     if (keyCode == DOWN)  down = false;
 }
 void updateItems() {
-
+    
     for (Item item : items) {
-
+        
         item.update();
         item.display();
-
+        
         if (item.isPlayerTouching(player)) {
             item.applyEffect(player);
         }

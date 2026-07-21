@@ -13,15 +13,31 @@ class Explosion {
     }
     
     void display() {
-        if (isFinished()) return;
+        if (isFinished()) {
+            return;
+        }
         
-        pushStyle();
-        noStroke();
-        fill(255, 100, 0);
-        rect(x * 40, y * 40, 40, 40);
-        fill(255, 230, 0);
-        rect(x * 40 + 8, y * 40 + 8, 24, 24);
-        popStyle();
+        if (explosionImage != null) {
+            image(
+                explosionImage,
+                x * 40,
+                y * 40,
+                40,
+                40
+               );
+            
+        } else {
+            pushStyle();
+            
+            noStroke();
+            fill(255, 100, 0);
+            rect(x * 40, y * 40, 40, 40);
+            
+            fill(255, 230, 0);
+            rect(x * 40 + 8, y * 40 + 8, 24, 24);
+            
+            popStyle();
+        }
     }
     
     boolean isFinished() {
@@ -41,8 +57,8 @@ class Explosion {
         float playerTop = player.y + 4;
         float playerBottom = player.y + 36;
         
-        return playerLeft < expRight && playerRight > expLeft &&
-               playerTop < expBottom && playerBottom > expTop;
+        return playerLeft < expRight && playerRight > expLeft && 
+        playerTop < expBottom && playerBottom > expTop;
     }
     
     boolean hitEnemy(Enemy enemy) {
@@ -58,7 +74,7 @@ class Explosion {
         float enemyTop = enemy.y + 4;
         float enemyBottom = enemy.y + 36;
         
-        return enemyLeft < expRight && enemyRight > expLeft &&
-               enemyTop < expBottom && enemyBottom > expTop;
+        return enemyLeft < expRight && enemyRight > expLeft && 
+        enemyTop < expBottom && enemyBottom > expTop;
     }
 }
