@@ -68,10 +68,28 @@ class Bomb {
                 }
                 
                 if (stage.hasBlock(tx, ty)) {
-                    explosions.add(new Explosion(tx, ty));
-                    stage.breakBlock(tx, ty);
-                    break; // 木箱で爆風はストップ
-                }
+    explosions.add(new Explosion(tx, ty));
+
+    stage.breakBlock(tx, ty);
+
+
+    // 20%の確率でアイテム出現
+    if (random(1) < 0.1) {
+
+        int type;
+
+        if (random(1) < 0.5) {
+            type = FIRE_ITEM;
+        } else {
+            type = BOMB_ITEM;
+        }
+
+        items.add(new Item(tx, ty, type));
+    }
+
+
+    break; // 木箱で爆風はストップ
+}
                 
                 explosions.add(new Explosion(tx, ty));
             }

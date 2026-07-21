@@ -5,6 +5,7 @@ class Item {
     int type;
     
     boolean collected;
+    int lifeTime;
     
     PImage img;
     
@@ -16,6 +17,7 @@ class Item {
         this.type = type;
         
         collected = false;
+        lifeTime = 600;   // 60fps × 10秒
         animationAngle = random(TWO_PI);
         
         try {
@@ -35,9 +37,15 @@ class Item {
         }
     }
     
-    void update() {
-        animationAngle += 0.08;
+   void update() {
+    animationAngle += 0.08;
+
+    lifeTime--;
+
+    if (lifeTime <= 0) {
+        collected = true;
     }
+}
     
     void display() {
         if (collected) {

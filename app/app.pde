@@ -4,16 +4,9 @@ import java.util.ArrayList;
 final int TITLE = 0;
 final int PLAYING = 1;
 final int RESULT = 2;
-
-<<<<<<< HEAD
-// アイテムの種類
 final int FIRE_ITEM = 0;
 final int BOMB_ITEM = 1;
 
-PImage explosionImage;
-
-=======
->>>>>>> 2252c7f8f9bba02335ae7daf8daa6ce0586792f6
 int gameState;
 
 Stage stage;
@@ -22,6 +15,7 @@ Player player;
 ArrayList<Bomb> bombs;
 ArrayList<Explosion> explosions;
 ArrayList<Enemy> enemies;
+ArrayList<Item> items;
 
 boolean up;
 boolean down;
@@ -29,35 +23,57 @@ boolean left;
 boolean right;
 
 boolean stageClear;
+// 制限時間
+int gameStartTime;
+int gameTimeLimit = 5 * 60 * 1000; // 5分
 
 void setup() {
     size(600, 600);
     pixelDensity(1);
     frameRate(60);
-<<<<<<< HEAD
-    
-    explosionImage = loadImage("explosion.png");
-    
-    if (explosionImage != null) {
-        explosionImage.resize(40, 40);
-    }
-    
-=======
->>>>>>> 2252c7f8f9bba02335ae7daf8daa6ce0586792f6
     gameState = TITLE;
 }
 
 void draw() {
+
     background(255);
+
     if (gameState == TITLE) {
+
         displayTitleScreen();
+
     } else if (gameState == PLAYING) {
+
+        int remaining = gameTimeLimit - (millis() - gameStartTime);
+
+        if (remaining <= 0) {
+            stageClear = false;
+            gameState = RESULT;
+            return;
+        }
+
         updateGame();
+
+        // 残り時間表示
+        fill(0);
+        textSize(28);
+        textAlign(CENTER, CENTER);
+
+        int minutes = remaining / 60000;
+        int seconds = (remaining / 1000) % 60;
+
+        text(
+            "LIMIT " + minutes + ":" + nf(seconds,2),
+            width / 2,
+            20
+        );
+
     } else if (gameState == RESULT) {
+
         displayResultScreen();
+
     }
 }
-
 void initializeGame() {
     stage = new Stage();
     player = new Player(40, 40);
@@ -65,7 +81,7 @@ void initializeGame() {
     bombs = new ArrayList<Bomb>();
     explosions = new ArrayList<Explosion>();
     enemies = new ArrayList<Enemy>();
-    
+    items = new ArrayList<Item>();
     // 敵を右下付近に配置
     enemies.add(new Enemy(520, 40, "bomberkun2.png"));
 enemies.add(new Enemy(40, 520, "bomberkun3.png"));
@@ -76,17 +92,20 @@ enemies.add(new Enemy(520, 520, "bomberkun4.png"));
     left = false;
     right = false;
     stageClear = false;
+    gameStartTime = millis();
 }
 
 void updateGame() {
     background(255);
     stage.display();
-    
+
+    updateItems();
+
     movePlayer();
     updateBombs();
     updateExplosions();
     updateEnemies();
-    
+
     player.display();
     checkGameResult();
 }
@@ -238,4 +257,16 @@ void keyReleased() {
     if (keyCode == RIGHT) right = false;
     if (keyCode == UP)    up = false;
     if (keyCode == DOWN)  down = false;
+}
+void updateItems() {
+
+    for (Item item : items) {
+
+        item.update();
+        item.display();
+
+        if (item.isPlayerTouching(player)) {
+            item.applyEffect(player);
+        }
+    }
 }
